@@ -3,14 +3,15 @@ import { Cars } from "../types/type.js";
 
 async function getCars() {
   return prisma.cars.findMany();
-  // const data = await db.query(`SELECT * FROM cars`);
-  // return data.rows;
 }
 
 async function getCar(id: number) {
-  // const data = await db.query(`SELECT * FROM cars WHERE id = $1`, [id]);
-  // return data.rows[0];
-}
+  return prisma.cars.findUnique({
+    where: {
+      id,
+    }
+  });
+};
 
 async function getCarWithLicensePlate(licensePlate: string) {
   // const data = await db.query(`SELECT * FROM cars WHERE "licensePlate" = $1`, [licensePlate]);
