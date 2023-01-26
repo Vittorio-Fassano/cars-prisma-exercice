@@ -2,6 +2,8 @@ import httpStatus from "http-status";
 import { Request, Response } from "express";
 import carRepository from "../repository/carRepository.js";
 import carService from "../services/carService.js";
+import { Cars } from "../types/type.js";
+import { cars } from "@prisma/client";
 
 async function getAllCars(req: Request, res: Response) {
   try {
@@ -27,11 +29,12 @@ async function getSpecificCar(req: Request, res: Response) {
 }
 
 async function createCar(req: Request, res: Response) {
-  const { model, licensePlate, year, color } = req.body;
+  const cars = req.body as Cars;
 
   try {
-    await carService.createCar(model, licensePlate, year, color)
-    res.sendStatus(httpStatus.CREATED);
+    const result = await carRepository.createCarRepository(cars);
+    console.log(result)
+    return res.send(result);
   } catch (e) {
     console.log(e);
     if (e.name === "ConflictError") {
