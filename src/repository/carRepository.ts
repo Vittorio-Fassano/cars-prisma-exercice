@@ -13,10 +13,10 @@ async function getCar(id: number) {
   });
 };
 
-async function getCarWithLicensePlate(licensePlate: string) {
-  // const data = await db.query(`SELECT * FROM cars WHERE "licensePlate" = $1`, [licensePlate]);
-  // return data.rows[0];
-}
+// async function getCarWithLicensePlate(licensePlate: string) {
+//   // const data = await db.query(`SELECT * FROM cars WHERE "licensePlate" = $1`, [licensePlate]);
+//   // return data.rows[0];
+// }
 
 async function createCarRepository(cars: Cars) {
   return prisma.cars.create({
@@ -25,12 +25,16 @@ async function createCarRepository(cars: Cars) {
 }
 
 async function deleteCar(id: number) {
-  // await db.query(`DELETE FROM cars WHERE id = $1`, [id]);
-}
+  return prisma.cars.delete({
+    where: {
+      id,
+    }
+  });
+};
 
 const carRepository = {
   getCar,
-  getCarWithLicensePlate,
+  // getCarWithLicensePlate,
   getCars,
   createCarRepository,
   deleteCar
